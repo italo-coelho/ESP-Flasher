@@ -53,6 +53,14 @@ def console_log(text):
     if event in (GUI.WIN_CLOSED, 'Exit'):
         sys.exit(0)
 
+print()
+print("  _____ ____  ____    _____ _           _               ")
+print(" | ____/ ___||  _ \\  |  ___| | __ _ ___| |__   ___ _ __ ")
+print(" |  _| \\___ \\| |_) | | |_  | |/ _` / __| '_ \\ / _ \\ '__|")
+print(" | |___ ___) |  __/  |  _| | | (_| \\__ \\ | | |  __/ |   ")
+print(" |_____|____/|_|     |_|   |_|\\__,_|___/_| |_|\\___|_|   ")
+print()
+                                                        
 while True:
     event, values = window.read(timeout=1000)
 
@@ -61,6 +69,9 @@ while True:
     
     if(event == "-FOLDER-"):
         folder = values["-FOLDER-"]
+
+        print("Folder Selected -->", folder)
+
         folder_name = os.path.basename(os.path.normpath(folder))
         window["-FOLDER_NAME-"].update(folder_name)
 
@@ -89,6 +100,8 @@ while True:
 
         window["-UPLOAD_TEXT-"].update("Connect ESP...")
 
+        print("Looking for new ESPs...")
+
         while True:
             event, values = window.read(timeout=1)
 
@@ -107,6 +120,7 @@ while True:
                 if(new_ports):
                     window["-UPLOAD_TEXT-"].update("Uploading...")
                     for p in new_ports:
+                        print("Uploading...")
                         flash_firmware(p, firmware, bootloader, partitions, callback=console_log)
                         time.sleep(1)
                     window["-UPLOAD_TEXT-"].update("Connect ESP...")
@@ -119,6 +133,8 @@ while True:
 
         window["-UPLOAD_TEXT-"].update("")
         window["-CONSOLE-"].update("")
+
+        print("Stopped!")
 
 
 window.close()
